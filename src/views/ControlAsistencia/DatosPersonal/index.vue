@@ -9,42 +9,36 @@
 
     <el-table
       v-loading="listLoading"
-      :data="UsuariosList.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase())
-        || (data.last_name && data.last_name.toLowerCase().indexOf(this.search.toLowerCase()) > -1) )"
+      :data="UsuariosList.filter(data => !search || data.full_name.toLowerCase().includes(search.toLowerCase()))"
       border
       style="width: 100%;"
     >
 
-      <el-table-column fixed align="center" label="No Empleado" width="112">
+      <el-table-column fixed align="center" label="No Empleado" width="115">
         <template slot-scope="scope">
           {{ scope.row.personal_id }}
         </template>
       </el-table-column>
-      <el-table-column fixed align="center" label="No Empleado Anterior" width="115">
+      <!-- <el-table-column  align="center" label="No Empleado Anterior" width="115">
         <template slot-scope="scope">
           {{ scope.row.previous_personal_id }}
         </template>
-      </el-table-column>
-      <el-table-column fixed align="center" label="Nombre" prop="Nombre" width="250">
+      </el-table-column> -->
+      <el-table-column  align="center" label="Nombre" prop="Nombre" width="250">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.name }} {{ scope.row.last_name }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Apellidos" width="280">
-        <template slot-scope="scope">
-          {{ scope.row.last_name }}
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="Fecha Nacimiento" width="150">
+      <!-- <el-table-column align="center" label="Fecha Nacimiento" width="150">
         <template slot-scope="scope">
           {{ scope.row.birth }}
         </template>
-      </el-table-column>
-      <el-table-column align="center" label="Sexo" width="90">
+      </el-table-column> -->
+      <!-- <el-table-column align="center" label="Sexo" width="90">
         <template slot-scope="scope">
           {{ scope.row.sex }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="Ubicación" width="140">
         <template slot-scope="scope">
           {{ scope.row.location }}
@@ -65,11 +59,6 @@
           {{ scope.row.email }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Extensión" width="100">
-        <template slot-scope="scope">
-          {{ scope.row.extension }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="Razon Social" width="300">
         <template slot-scope="scope">
           {{ scope.row.company_name }}
@@ -86,12 +75,14 @@
         </template>
       </el-table-column>
 
-      <!--<el-table-column align="center" label="Acciones">
+      <el-table-column align="center" label="Acciones" width="150" fixed="right">
         <template slot-scope="scope">
-          <el-button type="primary" @click="handleEdit(scope)" size="small" icon="el-icon-edit">Editar</el-button>
+          <el-button type="primary" @click="showModalSettings(scope.row)" size="small" circle><i class="fa-solid fa-gear"></i></el-button>
         </template>
-       </el-table-column>-->
+       </el-table-column>
     </el-table>
+    
+    <modalUserSettings ref="modalUserSettings" />
 
   </div>
 </template>
@@ -99,9 +90,11 @@
 <script>
 import Api from '@/store/modules/Api' // Clase Api donde se declara Axios y la ruta al servidor
 import { deepClone } from '@/utils'
+import modalUserSettings from './modalUserSettings'
 
 export default {
   components: {
+    modalUserSettings
   },
   data() {
     return {
@@ -180,6 +173,10 @@ export default {
     //  this.$root.$refs.ModalCrearUsuario.getTipoPermisos();
       this.$refs.ModalTipoPermisos.getTipoPermisos()
       this.$refs.ModalTipoPermisos.dialogVisible = true
+    },
+
+    showModalSettings(_data){
+      this.$refs.modalUserSettings._tempCreated(_data);
     }
 
   }

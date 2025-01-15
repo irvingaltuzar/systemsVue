@@ -102,6 +102,7 @@ export default {
         this.$store.dispatch('auditoria/addEventAuditoria', formAut)
 
 				Object.assign(this.$data, this.$options.data.call(this))
+				 this.$root.$refs.CurrentSuppliersListComponent.getList()
 			})
 			.catch(error => {
 				this.$notify({

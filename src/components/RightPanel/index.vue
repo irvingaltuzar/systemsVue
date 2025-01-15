@@ -80,6 +80,8 @@ export default {
   // this.$store.dispatch("NotificationsCenter")
       if (!parent) {
         this.show = false
+        this.$store.dispatch("viewAllNotifications");
+        this.$store.dispatch("countNotification");
         window.removeEventListener('click', this.closeSidebar)
 
 

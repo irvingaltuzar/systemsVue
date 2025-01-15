@@ -45,6 +45,19 @@ countNotification({ commit }) {
   })
 })
 },
+
+viewAllNotifications({ commit }) {
+  return new Promise((resolve) => {
+
+  Api.get('/viewAllNotifications').then(res => {
+    const { data } = res;
+    resolve();
+  }).catch(function(error) {
+    console.log(error)
+    })
+  })
+},
+
 changeStatusNotification({ commit }, formData) {
   const config = { headers: { 'content-type': 'multipart/form-data' }}
   return new Promise((resolve) => {

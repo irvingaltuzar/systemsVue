@@ -30,7 +30,7 @@
         </el-table-column>
       </el-table>
       <br>
-      <el-row class="m-3" type="flex" justify="center">
+      <!-- <el-row class="m-3" type="flex" justify="center">
         <el-pagination
           :page-size="headers.limit"
           :pager-count="9"
@@ -39,7 +39,7 @@
           @current-change="handleCurrentChange"
         >
         </el-pagination>
-      </el-row>
+      </el-row> -->
 
       <br>
     </el-card>
@@ -140,9 +140,9 @@ export default {
       //this.general_data
     },
 
-    handleCurrentChange(val){
+    /*handleCurrentChange(val){
       this.getList(val);
-    },
+    },*/
 
     handleChange(_position){
 

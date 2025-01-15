@@ -123,10 +123,23 @@ export default {
       state.headers.total = response.data.total
     },
     getAccountantPersonal(state) {
+      let ths = this;
       Api.get('/accounting/fetch-personal')
         .then(response => {
-          state.managers = response.data.filter(value => value.position_company === 'GERENTE')
+          let aux_manager= response.data.filter(value => (value.position_company.toLocaleLowerCase()).indexOf('gerente') !== -1)
           state.accountants = response.data.filter(value => value.position_company !== 'GERENTE')
+
+          let concat_manager=[];
+
+          Api.get('/accounting/users-as-manager')
+            .then(response => {
+              concat_manager=aux_manager.concat(response.data);
+              state.managers= concat_manager;
+            })
+            .catch(error => {
+              console.log(error)
+            })
+
         })
         .catch(error => {
           console.log(error)

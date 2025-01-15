@@ -52,7 +52,7 @@
         <el-button type="primary" icon="el-icon-edit-outline" @click="handleFirmarRequisition(scope)" circle></el-button>
                 </el-tooltip>
           <el-tooltip v-if="scope.row.document" content="Ver Documento" placement="top">
-         <el-button icon="el-icon-view" circle @click="viewFile(scope.row.urlDocument)"></el-button>
+         <el-button icon="el-icon-view" circle @click="viewFile(scope.row.document_url)"></el-button>
             </el-tooltip>
           </template>
       </el-table-column>

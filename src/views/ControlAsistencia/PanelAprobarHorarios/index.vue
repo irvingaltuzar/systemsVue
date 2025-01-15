@@ -17,27 +17,47 @@
         border
       >
 
-        <el-table-column fixed align="center" label="Acciones" width="115">
+        <el-table-column fixed align="center" label="Acciones" width="150">
           <template slot-scope="scope">
             <el-tooltip content="Autorizar" placement="top">
-              <el-button type="success" icon="el-icon-check" circle :loading="btnloading" @click="autorizarHorario(scope.row.Idtime)" />
+              <el-button type="success" icon="el-icon-check"  circle :loading="btnloading" @click="autorizarHorario(scope.row.Idtime)" />
             </el-tooltip>
             <el-tooltip content="Rechazar" placement="top">
               <el-button type="danger" icon="el-icon-close" circle :loading="btnloading2" @click="rechazarHorario(scope.row.Idtime)" />
             </el-tooltip>
+            <el-tooltip content="Editar" placement="bottom">
+              <el-button
+                
+                circle
+                @click="assignModalNewSchedule(scope.row)">
+                  <i class="fa-solid fa-edit"></i>
+              </el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
 
-        <el-table-column fixed align="center" label="Nombre" width="250">
+        <el-table-column  align="center" label="Nombre" width="250">
           <template slot-scope="scope">
             {{ scope.row.name +" "+scope.row.last_name }}
           </template>
         </el-table-column>
-        <el-table-column fixed align="center" label="Status" width="110">
+        <el-table-column  align="center" label="Estatus" width="110">
           <template slot-scope="scope">
             <el-tooltip :content="'por: '+scope.row.approved_by" placement="top">
               <el-tag type="primary" effect="dark">{{ scope.row.status }}</el-tag>
             </el-tooltip>
+          </template>
+        </el-table-column>
+
+        <el-table-column  align="center" label="Horas semanales" width="140">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.hours_week >= 40" type="success">{{ scope.row.hours_week }}</el-tag>
+            <el-tag v-else type="danger">{{ scope.row.hours_week }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column  align="center" label="Comentarios" width="160">
+          <template slot-scope="scope">
+            {{ scope.row.special_situation }}
           </template>
         </el-table-column>
 
@@ -183,12 +203,15 @@
       </el-table>
 
     </el-card>
+    <ModalCrearUsuario ref="ModalCrearUsuario" />
   </div>
 </template>
 
 <script>
 import Api from '@/store/modules/Api' // Clase Api donde se declara Axios y la ruta al servidor
 import { deepClone } from '@/utils'
+
+import ModalCrearUsuario from '../HorariosPersonal/components/ModalCrearUsuario.vue'
 
 export default {
   components: {
@@ -294,7 +317,15 @@ export default {
         this.btnloading2 = false
         this.getHorariosPersonal()
       }
-    }
+    },
+
+    assignModalNewSchedule(_Schedule){
+      this.$root.$refs.ModalCrearUsuario.ClearModal();
+      this.$root.$refs.ModalCrearUsuario.assignScheduleReject(_Schedule);
+      this.$root.$refs.ModalCrearUsuario.getPersonalIntelisis()
+      this.$root.$refs.ModalCrearUsuario.dialogType = 'new'
+      this.$root.$refs.ModalCrearUsuario.dialogVisible = true
+    },
 
   }
 }

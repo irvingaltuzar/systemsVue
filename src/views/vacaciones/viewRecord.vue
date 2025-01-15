@@ -305,11 +305,15 @@ export default {
 
       if(this.record_data.data_vacation_days != null){
 
-        this.record_data.data_vacation_days.available_periods.forEach(period => {
+        /* this.record_data.data_vacation_days.available_periods.forEach(period => {
           if(ths.record_data.type_period == period.type_period && ths.record_data.period == period.current_period_year){
               ths.period_selected = period;
           }
-        });
+        }); */
+
+        if(this.record_data.data_vacation_days.available_periods.length > 0){
+            ths.period_selected = this.record_data.data_vacation_days.available_periods[0];
+        }
 
       }else{
         console.log("Error en data_vacation_days");
@@ -348,6 +352,7 @@ export default {
 
     async signDocument(_status){
         this.fullscreenLoading = true;
+        this.btnDisabledSignFirmar= true;
 
         await Api.post("/rh/vacation/sing-document",{
             record_id: this.record_data.id,
@@ -367,7 +372,6 @@ export default {
 
                 this.record_data = response.data.data;
                 this.orderSignatures();
-                this.btnDisabledSignFirmar= true;
                 this.$notify({
                     title:"Excelente",
                     message: `Se ha ${response.data.action} el documento correctamente.`,
@@ -379,7 +383,6 @@ export default {
                 }
 
             }else{
-                this.btnDisabledSignFirmar= false;
 
                 this.$notify({
                     title:"Aviso",
@@ -387,8 +390,8 @@ export default {
                     type:"error",
                 });
             }
-
-          this.fullscreenLoading = false;
+            this.btnDisabledSignFirmar= false;
+            this.fullscreenLoading = false;
 
         })
         .catch(error =>{
@@ -405,6 +408,7 @@ export default {
 
     async signOnBehalfDocument(_status){
         this.fullscreenLoading = true;
+        this.btnDisabledSignFirmar= true;
 
         await Api.post("/rh/vacation/sing-document",{
             record_id: this.record_data.id,
@@ -425,7 +429,6 @@ export default {
 
                 this.record_data = response.data.data;
                 this.orderSignatures();
-                this.btnDisabledSignFirmar= true;
                 this.$notify({
                     title:"Excelente",
                     message: `Se ha ${response.data.action} el documento correctamente.`,
@@ -437,8 +440,6 @@ export default {
                 }
 
             }else{
-                this.btnDisabledSignFirmar= false;
-
                 this.$notify({
                     title:"Aviso",
                     message: response.data.message,
@@ -447,6 +448,7 @@ export default {
             }
 
           this.fullscreenLoading = false;
+          this.btnDisabledSignFirmar= false;
 
         })
         .catch(error =>{

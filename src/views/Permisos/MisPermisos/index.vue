@@ -259,7 +259,7 @@ export default {
           this.fullscreenLoading = true;
           Api.get("/rh/work-permits/cancel/"+_id)
           .then(response =>{
-            console.log(response);
+
             if(response.data.success == 1){
 
               const formAut = new FormData()

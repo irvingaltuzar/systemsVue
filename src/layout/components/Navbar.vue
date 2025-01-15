@@ -51,7 +51,7 @@
           <router-link to="/">
                     <el-dropdown-item>Inicio</el-dropdown-item>
                 </router-link>
-          <a href="http://192.168.3.170:8006">
+          <a href="http://intranet.dmi.local:8006/">
               <el-dropdown-item>Intranet</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">

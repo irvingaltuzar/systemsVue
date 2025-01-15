@@ -38,7 +38,7 @@
   </div>
     <div class="filter-container">
       <el-input v-model="search" clearable style="width: 30%;" class="filter-item" placeholder="Buscar">  <i slot="prefix" class="el-input__icon el-icon-search" /></el-input>
-      <el-button class="filter-item" style="margin-left: 20px;" type="primary" icon="el-icon-s-claim" plain @click="handleJustification">Justificar</el-button>
+      <!-- <el-button class="filter-item" style="margin-left: 20px;" type="primary" icon="el-icon-s-claim" plain @click="handleJustification">Justificar</el-button> -->
       <el-button class="filter-item" style="margin-left: 20px;" type="primary" icon="el-icon-s-claim" plain @click="handleTipoJustification">Tipos Justificación</el-button>
       <el-button class="filter-item" style="margin-left: 20px;" type="primary" icon="el-icon-date" plain @click="handleDaysOff">Dias Puente</el-button>
       <el-button class="filter-item" :loading="downloadLoading" style="margin-left: 20px;" type="primary" icon="el-icon-document" plain @click="handleDownload"> Export Excel</el-button>

@@ -28,9 +28,9 @@ export default {
   methods: {
     linkProps(to) {
       if (this.isExternal) {
-        console.log(to)
         return {
           href: to,
+          target: '_blank',
           rel: 'noopener'
         }
       }

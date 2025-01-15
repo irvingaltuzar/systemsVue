@@ -243,7 +243,6 @@ export default {
   filters:{
 
     end_signature(_signatures){
-      console.log("end_signature");
       let end_signature = "";
       let sign = null;
       for (const item of _signatures) {

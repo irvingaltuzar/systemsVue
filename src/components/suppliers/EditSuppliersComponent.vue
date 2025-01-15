@@ -167,6 +167,22 @@
 										<span v-if="v.currency" class="md-danger" style="color:red;">*{{ v.currency[0] }}</span>
 									</div>
 								</div>
+	          <div class="md-layout md-gutter mt-4">
+                  <div class="md-layout-item md-small-size-100">
+                     <md-field>
+                      <label for="business_name">Nombre Comercial</label>
+                      <md-input v-model="f.comercial_name" />
+                    </md-field>
+                    <span v-if="v.comercial_name" class="md-danger" style="color:red;">*{{ v.comercial_name[0] }}</span>
+                  </div>
+									<div class="md-layout-item md-small-size-100">
+                    <md-field>
+                      <label for="business_name">Contacto Referencia</label>
+                      <md-input v-model="f.contact_reference" />
+                    </md-field>
+                    <span v-if="v.contact_reference" class="md-danger" style="color:red;">*{{ v.contact_reference[0] }}</span>
+                  </div>
+                  </div>
 
                 <br>
                 <br>
@@ -278,7 +294,9 @@ export default {
       bank_clabe: '',
       bank_swift: '',
       credit_days: '',
-      currency: ''
+      currency: '',
+      contact_reference:'',
+      comercial_name:''
     },
     is_loaded: null,
     showDialog: false,
@@ -295,12 +313,14 @@ export default {
 
   },
   created(){
+         this.$store.dispatch("getBanks")
   },
   computed: {
       ...mapState('suppliers_tools', ['specialties']),
       ...mapGetters(['Countries', 'States','Banks']),
     data() {
       this.f.business_name = this.supplier.business_name,
+      this.f.comercial_name = this.supplier.comercial_name,
       this.f.type_person = this.supplier.type_person,
       this.f.rfc = this.supplier.rfc,
       this.f.email = this.supplier.email,
@@ -319,6 +339,7 @@ export default {
       this.f.bank_swift = this.supplier.bank_swift,
       this.f.credit_days = this.supplier.credit_days,
       this.f.currency = this.supplier.currency,
+      this.f.contact_reference = this.supplier.contact_reference,
       this.f.files = this.supplier.files
 
       this.cat_supplier_documents= this.catSupplierDocuments;
@@ -362,6 +383,7 @@ export default {
       formRequest.append('bank_swift',this.f.bank_swift);
       formRequest.append('credit_days',this.f.credit_days);
       formRequest.append('currency',this.f.currency);
+      formRequest.append('contact_reference',this.f.contact_reference);
 
 
       // ase agregan los documentos cargados

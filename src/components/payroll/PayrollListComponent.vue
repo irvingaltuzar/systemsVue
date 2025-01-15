@@ -8,6 +8,8 @@
         <div class="md-title">Recibos de nómina </div>
         <el-select v-model="tmp_year" placeholder="Año">
           <el-option :label="year" :value=year selected/>
+          <el-option label="2024" value=2024 />
+          <el-option label="2023" value=2023 />
           <el-option label="2022" value=2022 />
           <el-option label="2021" value=2021 />
           <el-option label="2020" value=2020 />
@@ -17,7 +19,7 @@
       </md-card-header>
       <md-progress-bar v-if="is_loading" md-mode="indeterminate" />
 
-    <md-card-content v-else>
+    <!-- <md-card-content v-else>
       <el-container>
         <el-row :gutter="25">
           <el-col :span="12"  v-for="(item, index) in months" :key="`d-${index}`" :offset="index > 0 ? 0 : 0" style="padding: 8px">
@@ -48,7 +50,6 @@
                         </div>
                       </div>
                       <el-divider ><i class="el-icon-star-on"></i></el-divider>
-                      <!-- <el-button type="primary mb-2" icon="el-icon-view" @click="preview(payroll.pdf_url)" round>Visualizar</el-button> -->
                     </template>
                   </el-col>
                 </el-row>
@@ -59,7 +60,48 @@
           </el-col>
         </el-row>
       </el-container>
-    </md-card-content>
+    </md-card-content> -->
+
+    <div class="container-fluid mb-5" v-else>
+
+        <div class="row">
+          <div class="col-md-6 mt-3" v-for="month in months">
+            <el-card class="box-card pb-3">
+                <div class="mx-auto text-center">
+                  <h4><b>{{ month.name }}</b></h4>
+                </div>
+                <el-divider ><i class="el-icon-star-on"></i></el-divider>
+                <div class="row justify-content-center">
+                  <div class="col-md-6" v-for="(payroll, index) in payrolls">
+                    <div class="col-md-12" v-if="payroll.month === month.name">
+                      <div class="container">
+                        <div class="row justify-content-center">
+                          <span class="span-file"><b>{{payroll.comments}}</b> </span>
+                        </div>
+                        <div class="row justify-content-center">
+                          <div class="md-layout md-gutter mt-3">
+                            <div class="md-layout-item md-small-size-50">
+                              <el-button size="mini" type="danger" circle @click="getPdf(payroll)">
+                                <md-icon class="size-xsmall">picture_as_pdf</md-icon>
+                              </el-button>
+                            </div>
+                            <div class="md-layout-item md-small-size-50">
+                              <el-button size="mini" type="warning" circle @click="downloadXml(payroll)">
+                                <md-icon class="size-xsmall">file_download</md-icon>
+                              </el-button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+            </el-card>
+          </div>
+        </div>
+
+    </div>
 
       <md-progress-bar v-if="disabled" md-mode="indeterminate" />
     </md-card>

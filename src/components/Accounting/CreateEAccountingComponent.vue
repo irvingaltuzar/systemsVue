@@ -6,14 +6,40 @@
 
         <md-dialog-content class="md-scrollbar">
           <md-card-content>
-            <div class="md-layout md-gutter mt-3">
-              <div class="md-layout-item md-small-size-100">
+            <div class="md-layout md-gutter mt-3 mb-3">
+              <el-col class="col-sm-12 col-md-12">
                 <el-select class="input-autocomplete" v-model="f.company_id" filterable placeholder="Selecciona una empresa">
                   <el-option v-for="item in accounting_companies" :key="item.id" :label="item.business_name" :value="item.id"></el-option>
                 </el-select>
                 <span v-if="v.company_id" class="md-danger" style="color:red;">*{{ v.company_id[0] }}</span>
-              </div>
+              </el-col>
             </div>
+
+            <div class="md-layout md-gutter mt-3">
+							<el-col class="col-sm-12 col-md-6">
+								<el-select v-model="f.month" placeholder="Mes">
+									<el-option label="Enero" value="01"></el-option>
+									<el-option label="Febrero" value="02"></el-option>
+									<el-option label="Marzo" value="03"></el-option>
+									<el-option label="Abril" value="04"></el-option>
+									<el-option label="Mayo" value="05"></el-option>
+									<el-option label="Junio" value="06"></el-option>
+									<el-option label="Julio" value="07"></el-option>
+									<el-option label="Agosto" value="08"></el-option>
+									<el-option label="Septiembre" value="09"></el-option>
+									<el-option label="Octubre" value="10"></el-option>
+									<el-option label="Noviembre" value="11"></el-option>
+									<el-option label="Diciembre" value="12"></el-option>
+									<el-option label="Anual" value="13"></el-option>
+								</el-select>
+								<span class="md-danger" v-if="v.month">{{v.month[0]}}</span>
+							</el-col>
+							<el-col class="col-sm-12 col-md-6">
+								<el-input  placeholder="Año" v-model="f.year"></el-input>
+								<span class="md-danger" v-if="v.year">{{v.year[0]}}</span>
+							</el-col>
+						</div>
+
             <div class="md-layout md-gutter mt-3">
               <div class="md-layout-item md-small-size-100">
                 <md-datepicker v-model="f.date" required>
@@ -30,10 +56,10 @@
               </div>
             </div>
             <div class="md-layout md-gutter mt-3">
-              <div class="md-layout-item md-small-size-100">
+              <!-- <div class="md-layout-item md-small-size-100">
                 <md-switch v-model="f.yearly" class="md-primary">Anual</md-switch>
                 <span v-if="v.yearly" class="md-danger" style="color:red;">*{{ v.yearly[0] }}</span>
-              </div>
+              </div> -->
               <div class="md-layout-item md-small-size-100">
                 <md-field>
                   <label>Estatus</label>
@@ -74,7 +100,9 @@ export default {
       date: '',
       yearly: false,
       id_transaction: '',
-      e_accounting_status: ''
+      e_accounting_status: '',
+      month:moment(new Date()).format('MM'),
+      year:''
     },
     v: new Object(),
     sending: false,
@@ -94,6 +122,8 @@ export default {
         date: this.f.date,
         yearly: this.f.yearly,
         e_accounting_status: this.f.e_accounting_status,
+        month: this.f.month,
+        year: this.f.year,
       })
         .then(res => {
           this.$notify({

@@ -10,7 +10,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            DATABOX
+            DATABOX 2
           </div>
       
         </div>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </el-col>
-      <el-col :xs="8" :sm="4" :lg="7" class="card-panel-col ">
+    <el-col :xs="8" :sm="4" :lg="7" class="card-panel-col ">
       <div v-scroll-to="'#element'" class="card-panel" @click="clc8">
         <div class="card-panel-icon-wrapper icon-search">
          <UndrawLogistics class="size-icon" />
@@ -78,6 +78,18 @@
         <div class="card-panel-description">
           <div class="card-panel-text">
            PROVEEDORES
+          </div>
+        </div>
+      </div>
+    </el-col>
+    <el-col :xs="8" :sm="4" :lg="7" class="card-panel-col ">
+      <div v-scroll-to="'#element'" class="card-panel" @click="clc9">
+        <div class="card-panel-icon-wrapper icon-search">
+         <UndrawCompleted class="size-icon" />
+        </div>
+        <div class="card-panel-description">
+          <div class="card-panel-text">
+           AUTORIZACIONES
           </div>
         </div>
       </div>
@@ -138,8 +150,10 @@ import UndrawEatingTogether from 'vue-undraw/UndrawEatingTogether';
 import UndrawPeopleSearch from 'vue-undraw/UndrawPeopleSearch';
 import UndrawFinance from 'vue-undraw/UndrawFinance';
 import UndrawLogistics from 'vue-undraw/UndrawLogistics';
+import UndrawCompleted from 'vue-undraw/UndrawCompleted';
 import UndrawFileSearching from 'vue-undraw/UndrawFileSearching';
 import UndrawCreditCardPayments from 'vue-undraw/UndrawCreditCardPayments';
+import store from '@/store' // Clase Api donde se declara Axios y la ruta al servidor	
 import { mapGetters } from 'vuex'
 export default {
   components: {
@@ -150,6 +164,7 @@ export default {
     UndrawPeopleSearch,
     UndrawFinance,
     UndrawLogistics,
+    UndrawCompleted,
     UndrawFileSearching,
     UndrawTimeManagement,
     UndrawCreditCardPayments
@@ -167,7 +182,10 @@ export default {
   },
   methods: {
     clcDatabox(){
-        this.$router.push('/Databox/Dashboard');
+        this.getTokenUser();
+
+        //window.open(`http://databox2.dmi.local/login.php?user=${store.getters.user}&pass=${token}`,'_blank');
+        //this.$router.push('/Databox/Dashboard');
     },
     clc2(){
      this.$router.push('/MiAsistencia'); 
@@ -191,8 +209,27 @@ export default {
        this.$router.push('/proveedores/registroproveedores'); 
     },
      clc9(){
-       this.$router.push('/nominas/mis-nominas'); 
+       this.$router.push('/authorisations'); 
     },
+
+    async getTokenUser(){
+      await Api.get("/tools/token-adhoc")
+        .then(response =>{
+
+            if(response.data.success == 1){
+              window.open(`http://databox2.dmi.local/login.php?user=${store.getters.user}&pass=${response.data.data}`,'_blank');
+            }else{
+              window.open(`http://databox2.dmi.local/`);
+            }
+        })
+        .catch(error =>{
+          this.$notify({
+                title:"Aviso",
+                message: "Ha ocurrido un error, intente de nuevo",
+                type:"error",
+              });
+        });
+    }
   }
 
 }

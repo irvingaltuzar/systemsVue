@@ -331,14 +331,22 @@
 
     </el-form>
 
-    <div style="text-align:right;">
+    <!-- <div style="text-align:right;">
       <el-button type="info" @click="CancelarModal()">Cerrar</el-button>
       <el-button type="success" v-if="this.formRequisition.status=='validacion'" :loading="btnloading" @click="confirmRequisition('formRequisition')">Guardar Cambios </el-button>
       <el-button type="primary" v-if="this.formRequisition.status=='validacion'" :loading="btnloading" @click="ValidateRequisition">Validar Requisición <i class="el-icon-check el-icon-right" /></el-button>
         <el-button type="info" v-if="(this.formRequisition.status=='validacion' || this.formRequisition.status=='recaudar firmas') && Supervalidator==true" :loading="btnloading" @click="AutoRequisition">Autorizar Requisición <i class="el-icon-check el-icon-right" /></el-button>
-      <el-button type="danger" v-if="this.formRequisition.status=='validacion'" :loading="btnloading" @click="RechRequisition">Rechazar Requisición <i class="el-icon-check el-icon-right" /></el-button>
-      <!-- <el-button type="primary">Subir Archivo</el-button> -->
-    </div>
+      <el-button type="danger" v-if="this.formRequisition.status=='validacion'" :loading="btnloading" @click="RechRequisition">Rechazar Requisición <i class="el-icon-check el-icon-right" /></el-button>      
+    </div> -->
+    
+    <el-row class="mt-3" style="text-align:right;">
+      <el-button style="width:130px;" @click="CancelarModal()">Cerrar</el-button>
+      <el-button style="width:130px;" type="danger" v-if="this.formRequisition.status=='validacion'" :loading="btnloading" @click="RechRequisition">Rechazar</el-button>
+      <el-button style="width:140px;" type="primary" v-if="this.formRequisition.status=='validacion'" :loading="btnloading" @click="confirmRequisition('formRequisition')">Guardar Cambios </el-button>
+      <el-button style="width:130px;" type="warning" @click="GenerateRequisitionTemp(formRequisition.id)">Generar PDF</el-button>
+      <el-button style="width:130px;" type="success" v-if="(this.formRequisition.status=='validacion' || this.formRequisition.status=='recaudar firmas') && Supervalidator==true" :loading="btnloading" @click="AutoRequisition">Autorizar</el-button>
+      <el-button style="width:130px;" type="success" v-if="this.formRequisition.status=='validacion' && user_who_can_validate == 1" :loading="btnloading" @click="ValidateRequisition">Validar</el-button>
+    </el-row>
   </el-dialog>
 
 </template>
@@ -507,7 +515,8 @@ export default {
         {  id:3, value: 'Soft Phone(diadema)',label: 'Soft Phone(diadema)'},
         // {  id:4,  value: 'Cuenta Correo', label: 'Cuenta Correo' }
         ],
-      personalFirmas:[]
+      personalFirmas:[],
+      user_who_can_validate:0,
 
     }
   },
@@ -520,6 +529,7 @@ export default {
 
     this.$store.dispatch('getVw_CompanyName');
     this.$store.dispatch('getVw_BranchCode');
+    this.userWhoCanValidate();
 
     // this.formRequisition.deparment= this.$store.getters.deparment;
 
@@ -876,7 +886,7 @@ export default {
         const formAut = new FormData()
         formAut.append('name_view', this.$route.name)
         formAut.append('comentarios', 'Se rechazó esta requisición')
-        formAut.append('evento', 'RechRequisición()')
+        formAut.append('evento', 'RechRequisicón()')
          formAut.append('id_afectado', this.formRequisition.id)
 
         this.$store.dispatch('auditoria/addEventAuditoria', formAut)
@@ -925,15 +935,11 @@ export default {
          formAut.append('id_afectado', this.formRequisition.id)
 
         this.$store.dispatch('auditoria/addEventAuditoria', formAut)
-           this.$store.dispatch("getConsultaPersonalRequisitions",formData ).then(res=>{ 
-      this.total=res.total
-    });
-         this.$store.dispatch("getRequisitionValidation").then(res => {
+           })
+        this.$store.dispatch("getRequisitionValidation").then(res => {
            this.dialogVisible = false;
 
           })
-           })
-       
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -947,6 +953,27 @@ export default {
         });
     }
       },
+
+    async GenerateRequisitionTemp(id){
+      const config = { headers: { 'content-type': 'multipart/form-data' }}
+      const formData = new FormData()
+      formData.append('id',id)
+      await Api.post('/personalRequisition/GenerateRequisitionTemp',formData, config).then(res => {
+        this.$root.$refs.ViewFile.ViewArchivo(res.data.url);
+      })
+      
+    },
+    userWhoCanValidate() {
+      let ths = this;
+      Api.get('/personalRequisition/user-who-can-validate').then(res => {
+        if(res.data.success == 1){
+          ths.user_who_can_validate = 1;
+        }else{
+          ths.user_who_can_validate = 0;
+        }
+
+      })
+    },
 
   }
 }

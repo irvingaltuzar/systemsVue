@@ -154,6 +154,7 @@ export default {
       this.$root.$refs.ModalRequisition.search= scope.row.personal_substitution;
       this.$root.$refs.ModalRequisition.formRequisition.personal_substitution= scope.row.personal_substitution;
          this.$root.$refs.ModalRequisition.formRequisition.temp_reason= scope.row.temp_reason;
+         this.$root.$refs.ModalRequisition.formRequisition.days_temp_reason= scope.row.days_temp_reason;
       if(scope.row.dmi_control_email_domain){
       this.$root.$refs.ModalRequisition.handleChangeEmail(true);
 

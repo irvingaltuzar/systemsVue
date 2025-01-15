@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             title: '',
-            logo: '@/assets/logo-grupo-dmi.png'
+            logo: 'http://grupodmi.com.mx/assets/img/logo-dmi.svg'
         }
     }
 }

@@ -55,6 +55,7 @@
       </el-table-column>
 
     </el-table>
+    <ModalRequisition ref="ModalRequisition" />
   </div>
 
 </template>
@@ -90,54 +91,54 @@ export default {
       // formData.append('id',id)
          const listArchivos = []
       // await this.$store.dispatch("getRequisitionValidationbyId",formData)
-        this.$root.$refs.ModalRequisition.handleChangeTravel(true);
-      this.$root.$refs.ModalRequisition.formRequisition= deepClone(scope.row);
-      this.$root.$refs.ModalRequisition.formRequisition.vacancy= scope.row.vacancy;
-      this.$root.$refs.ModalRequisition.handleChangeType(scope.row.type);
-      this.$root.$refs.ModalRequisition.handleChangeTypeTemp(scope.row.type_vacancy);
-      this.$root.$refs.ModalRequisition.search= scope.row.personal_substitution;
-      this.$root.$refs.ModalRequisition.formRequisition.personal_substitution= scope.row.personal_substitution;
-      this.$root.$refs.ModalRequisition.formRequisition.reason_replacement= scope.row.reason_replacement;
-      this.$root.$refs.ModalRequisition.formRequisition.type_vacancy= scope.row.type_vacancy;
-      this.$root.$refs.ModalRequisition.formRequisition.temp_reason= scope.row.temp_reason;
-      this.$root.$refs.ModalRequisition.formRequisition.date= scope.row.date;
+        this.$refs.ModalRequisition.handleChangeTravel(true);
+      this.$refs.ModalRequisition.formRequisition= deepClone(scope.row);
+      this.$refs.ModalRequisition.formRequisition.vacancy= scope.row.vacancy;
+      this.$refs.ModalRequisition.handleChangeType(scope.row.type);
+      this.$refs.ModalRequisition.handleChangeTypeTemp(scope.row.type_vacancy);
+      this.$refs.ModalRequisition.search= scope.row.personal_substitution;
+      this.$refs.ModalRequisition.formRequisition.personal_substitution= scope.row.personal_substitution;
+      this.$refs.ModalRequisition.formRequisition.reason_replacement= scope.row.reason_replacement;
+      this.$refs.ModalRequisition.formRequisition.type_vacancy= scope.row.type_vacancy;
+      this.$refs.ModalRequisition.formRequisition.temp_reason= scope.row.temp_reason;
+      this.$refs.ModalRequisition.formRequisition.date= scope.row.date;
       if(scope.row.dmi_control_email_domain){
-      this.$root.$refs.ModalRequisition.handleChangeEmail(true);
+      this.$refs.ModalRequisition.handleChangeEmail(true);
 
       }else{
-          this.$root.$refs.ModalRequisition.handleChangeEmail(false);
+          this.$refs.ModalRequisition.handleChangeEmail(false);
       }
       if(scope.row.file){
         listArchivos.push({ name: scope.row.file, url: scope.row.url })
-         this.$root.$refs.ModalRequisition.fileList = listArchivos
+         this.$refs.ModalRequisition.fileList = listArchivos
       }
 
       var reso=Object.values(scope.row.resources);
-      this.$root.$refs.ModalRequisition.formRequisition.resources= reso;
+      this.$refs.ModalRequisition.formRequisition.resources= reso;
       if( scope.row.time_travel ){
-        this.$root.$refs.ModalRequisition.chktravel=true;
+        this.$refs.ModalRequisition.chktravel=true;
       }
       if(scope.row.status == "Recaudar Firmas" || scope.row.status == "autorizado" || scope.row.status == "Cancelada"){
-      this.$root.$refs.ModalRequisition.isDisabled=true;
+      this.$refs.ModalRequisition.isDisabled=true;
       }
 
       if(scope.row.type=="Reemplazo"){
              if(scope.row.personal_substitution !== null && scope.row.personal_substitution !== "null"){
-        this.$root.$refs.ModalRequisition.formRequisition.personal_substitution= scope.row.personal_substitution;
-      this.$root.$refs.ModalRequisition.search= scope.row.personal_substitution;
+        this.$refs.ModalRequisition.formRequisition.personal_substitution= scope.row.personal_substitution;
+      this.$refs.ModalRequisition.search= scope.row.personal_substitution;
 
           }else{
-        this.$root.$refs.ModalRequisition.formRequisition.plaza_id= scope.row.plaza_id;
-      this.$root.$refs.ModalRequisition.search= scope.row.plaza_id;
+        this.$refs.ModalRequisition.formRequisition.plaza_id= scope.row.plaza_id;
+      this.$refs.ModalRequisition.search= scope.row.plaza_id;
 
           }
              const formData = new FormData()
       formData.append('user', scope.row.user)
     this.$store.dispatch('getCommading_staff_All_Panel',formData);
         }
-      this.$root.$refs.ModalRequisition.dialogType = 'new'
-      this.$root.$refs.ModalRequisition.higher = true;
-      this.$root.$refs.ModalRequisition.dialogVisible = true
+      this.$refs.ModalRequisition.dialogType = 'new'
+      this.$refs.ModalRequisition.higher = true;
+      this.$refs.ModalRequisition.dialogVisible = true
 
     },
   

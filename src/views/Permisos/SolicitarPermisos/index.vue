@@ -384,8 +384,6 @@ export default {
         return concept.id == _permit_concept_id;
       })[0]
 
-      console.log(permit_concept);
-
       this.attach_support_doc = permit_concept;
 
       this.form_request_permit.total_days = permit_concept.days;

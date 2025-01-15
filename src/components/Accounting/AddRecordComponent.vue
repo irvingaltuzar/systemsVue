@@ -230,7 +230,7 @@
           },
           form_request:{
             dmi_accounting_companies_id:null,
-            month:moment(new Date()).format('M'),
+            month:moment(new Date()).format('MM'),
             year:moment(new Date()).format('Y'),
             date_accounting:moment(new Date()).format('YYYY-MM-DD'),
             date_fiscal:null,

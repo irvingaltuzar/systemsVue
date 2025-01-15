@@ -11,7 +11,7 @@
         <el-tag effect="dark" style="margin-left: 15px">Día Justificado</el-tag>
       </center><br>
     </div>
-    <div id="app2">
+    <div id="app2" style="width:100%;">
 
       <div class="calendar-parent">
         <calendar-view

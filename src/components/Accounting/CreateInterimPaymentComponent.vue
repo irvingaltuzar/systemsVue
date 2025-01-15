@@ -7,13 +7,46 @@
 				<md-dialog-content class="md-scrollbar">
 					<md-card-content>
 						<div class="md-layout md-gutter mt-3">
-							<div class="md-layout-item md-small-size-100">
+							<div class="md-layout-item">
 								<el-select class="input-autocomplete" v-model="f.company_id" filterable placeholder="Selecciona una empresa">
 									<el-option v-for="item in accounting_companies" :key="item.id" :label="item.business_name" :value="item.id"></el-option>
 								</el-select>
 								<span v-if="v.company_id" class="md-danger" style="color:red;">*{{ v.company_id[0] }}</span>
 							</div>
 						</div>
+
+						<div class="md-layout md-gutter mt-3">
+							<el-col class="col-sm-12 col-md-6">
+								<label>Mes <span class="input-required">*</span></label>
+								<el-select v-model="f.month" placeholder="Mes">
+									<el-option label="Enero" value="01"></el-option>
+									<el-option label="Febrero" value="02"></el-option>
+									<el-option label="Marzo" value="03"></el-option>
+									<el-option label="Abril" value="04"></el-option>
+									<el-option label="Mayo" value="05"></el-option>
+									<el-option label="Junio" value="06"></el-option>
+									<el-option label="Julio" value="07"></el-option>
+									<el-option label="Agosto" value="08"></el-option>
+									<el-option label="Septiembre" value="09"></el-option>
+									<el-option label="Octubre" value="10"></el-option>
+									<el-option label="Noviembre" value="11"></el-option>
+									<el-option label="Diciembre" value="12"></el-option>
+									<el-option label="Anual" value="13"></el-option>
+								</el-select>
+								<span class="md-danger" v-if="v.month">{{v.month[0]}}</span>
+							</el-col>
+							<el-col class="col-sm-12 col-md-6">
+								<label>Año <span class="input-required">*</span></label>
+								<el-input  placeholder="Año" v-model="f.year"></el-input>
+								<span class="md-danger" v-if="v.year">{{v.year[0]}}</span>
+							</el-col>
+							<!-- <el-col class="col-sm-12 col-md-4 text-center">
+								<label>Anual</label><br>
+								<el-switch v-model="f.yearly"></el-switch>
+                				<span v-if="v.yearly" class="md-danger" style="color:red;">*{{ v.yearly[0] }}</span>
+							</el-col> -->
+						</div>
+
 						<br>
 						<br>
 						<div class="md-subtitle">Registro DIOT</div>
@@ -21,7 +54,7 @@
 						<div class="md-layout md-gutter mt-3">
 							<div class="md-layout-item md-small-size-100">
 								<md-datepicker v-model="f.diot.date" required>
-									<label>Fecha de inicio *</label>
+									<label>Fecha de presentación *</label>
 								</md-datepicker>
 								<span v-if="v.diot_date" class="md-danger" style="color:red;">*{{ v.diot_date[0] }}</span>
 							</div>
@@ -40,7 +73,7 @@
 						<div class="md-layout md-gutter mt-3">
 							<div class="md-layout-item md-small-size-100">
 								<md-datepicker v-model="f.dyp.date" required>
-									<label>Fecha de inicio *</label>
+									<label>Fecha de presentación *</label>
 								</md-datepicker>
 								<span v-if="v.dyp_date" class="md-danger" style="color:red;">*{{ v.dyp_date[0] }}</span>
 							</div>
@@ -54,10 +87,10 @@
 						</div>
 						<md-divider></md-divider>
 						<div class="md-layout md-gutter mt-3">
-              <div class="md-layout-item md-small-size-100">
+              <!-- <div class="md-layout-item md-small-size-100">
                 <md-switch v-model="f.yearly" class="md-primary">Anual</md-switch>
                 <span v-if="v.yearly" class="md-danger" style="color:red;">*{{ v.yearly[0] }}</span>
-              </div>
+              </div> -->
 						</div>
 					</md-card-content>
 					<md-progress-bar v-if="disabled" md-mode="indeterminate" />
@@ -92,7 +125,9 @@ export default {
 				id_transaction: '',
 			},
 			company_id: '',
-			yearly: false
+			yearly: false,
+			month:moment(new Date()).format('MM'),
+          	year:'',
 		},
 		v: new Object(),
 		sending: false,
@@ -111,7 +146,9 @@ export default {
 				diot_id_transaction: this.f.diot.id_transaction,
 				dyp_date: this.f.dyp.date,
 				dyp_id_transaction: this.f.dyp.id_transaction,
-				yearly: this.f.yearly
+				yearly: this.f.yearly,
+				month: this.f.month,
+				year: this.f.year
 			})
 			.then(res => {
 				this.$notify({

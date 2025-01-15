@@ -334,13 +334,21 @@
 
     </el-form>
 
-    <div style="text-align:right;">
+    <!-<div style="text-align:right;">
       <el-button type="info" @click="CancelarModal()">Cerrar</el-button>
       <el-button type="danger" v-if="this.formRequisition.status=='recaudar firmas' && this.formRequisition.sign_status=='pendiente'" :loading="btnloading" @click="RechRequisition">Rechazar Requisición <i class="el-icon-close el-icon-right" /></el-button>
       <el-button v-if="this.formRequisition.status=='recaudar firmas' && this.formRequisition.sign_status=='pendiente'" type="success" icon="el-icon-check" @click="handleFirmarRequisition" >Firmar Requisición</el-button>
-        <!-- <el-button type="primary" :loading="btnloading" @click="ValidateRequisition">Validar Requisición <i class="el-icon-check el-icon-right" /></el-button>
-    <el-button type="primary">Subir Archivo</el-button> -->
-    </div>
+    </div> -->
+
+    <md-content class="mt-5">
+      <el-row class="mt-1" style="text-align:right;">
+        <el-button style="width:130px;" @click="CancelarModal()">Cerrar</el-button>
+        <el-button style="width:130px;" type="danger" v-if="this.formRequisition.status=='recaudar firmas' && this.formRequisition.sign_status=='pendiente'" :loading="btnloading" @click="RechRequisition">Rechazar</el-button>
+        <el-button style="width:130px;"type="warning" @click="GenerateRequisitionTemp(formRequisition.id)">Generar PDF</el-button>
+        <el-button style="width:130px;" v-if="this.formRequisition.status=='recaudar firmas' && this.formRequisition.sign_status=='pendiente'" type="success" @click="handleFirmarRequisition" >Firmar</el-button>
+      </el-row>
+    </md-content>
+
   </el-dialog>
 
 </template>
@@ -521,7 +529,7 @@ personalFirmas:[],
     }
   },
   beforeMount() {
-     this.$root.$refs.ModalRequisition = this
+     //this.$root.$refs.ModalRequisition = this
   },
   mounted(){
   },
@@ -918,6 +926,15 @@ personalFirmas:[],
      
 
       },
+    async GenerateRequisitionTemp(id){
+      const config = { headers: { 'content-type': 'multipart/form-data' }}
+      const formData = new FormData()
+      formData.append('id',id)
+      await Api.post('/personalRequisition/GenerateRequisitionTemp',formData, config).then(res => {
+        this.$root.$refs.ViewFile.ViewArchivo(res.data.url);
+      })
+      
+    },
   
   }
 }

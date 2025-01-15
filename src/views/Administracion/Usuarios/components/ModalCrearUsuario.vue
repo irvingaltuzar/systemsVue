@@ -50,8 +50,8 @@
           width="55"
           property="key"
         />
-          <!-- <el-table-column
-          label="Nombre Seccion"
+          <el-table-column
+          label="Nombre Sección"
         >
           <template slot-scope="scope">
 
@@ -60,10 +60,10 @@
           
           </template>
 
-        </el-table-column>-->
+        </el-table-column>
 
         <el-table-column
-          label="Nombre Subseccion"
+          label="Nombre Subsección"
         >
           <template slot-scope="scope">{{ scope.row.subsecDesc }}</template>
         </el-table-column>

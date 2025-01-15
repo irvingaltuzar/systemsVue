@@ -6,6 +6,7 @@ const getters = {
   PersonalAttendance: state => state.arrAsistencia,
   HoursEntrance: state => state.arrHourEntrance,
   HoursFood: state => state.arrHourFood,
+  HoursEntryFood: state => state.arrHourEntryFood,
   HorarioPendiente: state => state.arrHorarioPendiente,
   DaysOff: state => state.arrDaysOff,
 }
@@ -14,7 +15,8 @@ const state = {
   arrHourEntrance: [],
   arrHourFood: [],
   arrHorarioPendiente: [],
-  arrDaysOff:[]
+  arrDaysOff:[],
+  arrHourEntryFood:[],
 }
 
 const mutations = {
@@ -26,6 +28,9 @@ const mutations = {
   },
   SET_HOUR_FOOD: (state, payload) => {
     state.arrHourFood = payload
+  },
+  SET_HOUR_ENTRY_FOOD: (state, payload) => {
+    state.arrHourEntryFood = payload
   },
   SET_HORARIO_PENDIENTE: (state, payload) => {
     state.arrHorarioPendiente = payload
@@ -87,6 +92,18 @@ const actions = {
       })
     })
   },
+  getHourEntryFood({ commit }, formData) {
+    const config = { headers: { 'content-type': 'multipart/form-data' }}
+    return new Promise((resolve) => {
+      Api.get('/controlAsistencia/getHourEntryFood').then(res => {
+        const { data } = res
+        commit('SET_HOUR_ENTRY_FOOD', data)
+        resolve()
+      }).catch(error => {
+        console.log(error)
+      })
+    })
+  },
   // get horario for module Solicitar cambio de Horario
    getHorarioPendiente({ commit }, formData) {
     const config = { headers: { 'content-type': 'multipart/form-data' }}
@@ -94,7 +111,7 @@ const actions = {
       Api.get('/controlAsistencia/getHorarioPendiente').then(res => {
         const { data } = res
         commit('SET_HORARIO_PENDIENTE', data)
-        resolve()
+        resolve(data)
       }).catch(error => {
         console.log(error)
       })

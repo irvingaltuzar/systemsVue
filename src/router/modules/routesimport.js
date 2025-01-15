@@ -48,6 +48,8 @@ import ReporteGeneralVacaciones from '@/views/vacaciones/reporteGeneral.vue'
 import AutorizarHorarios from '@/views/ControlAsistencia/AutorizarHorariosArea'
 import PanelHorarios from '@/views/ControlAsistencia/PanelAprobarHorarios'
 import HorariosDependientes from '@/views/ControlAsistencia/HorariosDependientes'
+import SolicitudJustification from '@/views/ControlAsistencia/SolicitudJustification'
+import AutorizaJustificacion from '@/views/ControlAsistencia/AutorizarJustification'
 import SolicitudRequisicion from '@/views/Requisiciones/SolicitudRequisicion'
 import AccountingTools from '@/views/Accounting/AccountingTools'
 import MisRequisiciones from '@/views/Requisiciones/MisRequisiciones'
@@ -58,6 +60,7 @@ import EAccounting from '@/views/Accounting/EAccounting'
 import OverviewActivities from '@/views/Accounting/OverviewActivities'
 import PayrollView from '@/views/payroll/PayrollView'
 import RequisicionesMiPersonal from '@/views/Requisiciones/RequisicionesMiPersonal'
+import RequisicionesPendientesFirma from '@/views/Requisiciones/RequisicionesPendientesFirma'
 import LeyAntilavado from '@/views/Accounting/LeyAntilavado'
 import RegistroProveedores from '@/views/Proveedores/RegistroProveedores'
 import RevisionEFO from '@/views/Proveedores/RevisionEFO'
@@ -69,9 +72,13 @@ import Dashboard from '@/views/inicio'
 import ReemplazoTemporalDeColaborador from '@/views/RecursosHumanos/ReemplazoTemporalDeColaborador'
 import CoordinadorPorUbicacion from '@/views/RecursosHumanos/CoordinadorPorUbicacion/index.vue'
 import FechasDeCorte from '@/views/Accounting/CutOffDate.vue'
-import RequisicionesPendientesFirma from '@/views/Requisiciones/RequisicionesPendientesFirma'
-import SolicitudJustification from '@/views/ControlAsistencia/SolicitudJustification'
-import AutorizaJustificacion from '@/views/ControlAsistencia/AutorizarJustification'
+import AutoJustificacion from '@/views/ControlAsistencia/AutoJustificacion'
+//import PanelWhatsApp from '@/views/PanelWhatsApp/panel.vue'
+import Autorizaciones from '@/views/RecursosHumanos/Autorizaciones/list.vue'
+import Prenomina from '@/views/RecursosHumanos/CAI'
+import ProcesoDeIncidencias from '@/views/RecursosHumanos/CAI/ProcesoDeIncidencias/list.vue'
+import ValidarIncidencias from '@/views/RecursosHumanos/CAI/ValidarIncidencias/single.vue'
+
 
 // Array de componentes inicializados
 const components = [
@@ -118,8 +125,9 @@ const components = [
   { name: 'Panel Requisiciones', component: PanelRequisiciones },
   { name: 'Cierre Mensual', component: CierreMensual },
   { name: 'Precierres Fiscales', component: PrecierresFiscales },
-  { name: 'Recibos de nómina', component: PayrollView },
+  { name: 'Recibos de nomina', component: PayrollView },
   { name: 'Requisiciones Mi Personal', component: RequisicionesMiPersonal},
+  { name: 'RequisicionesPendientesFirma', component: RequisicionesPendientesFirma},
   { name: 'Ley Antilavado', component: LeyAntilavado},
   { name: 'Mis Proveedores / Registro', component: RegistroProveedores},
   { name: 'Revision EFO', component: RevisionEFO},
@@ -134,7 +142,12 @@ const components = [
   { name: 'Fechas De Corte', component: FechasDeCorte},
   { name: 'Solicitud Justificacion', component: SolicitudJustification},
   { name: 'Autorizar Justificacion', component: AutorizaJustificacion},
-  { name: 'RequisicionesPendientesFirma', component: RequisicionesPendientesFirma},
+  { name: 'Auto-Justificación', component: AutoJustificacion},
+  //{ name: 'Panel WhatsApp', component: PanelWhatsApp},
+  { name: 'Autorizaciones', component: Autorizaciones},
+  { name: 'Prenómina', component: Prenomina},
+  { name: 'Proceso De Incidencias', component: ProcesoDeIncidencias},
+  { name: 'Validar Incidencias', component: ValidarIncidencias},
 ]
 
 export default components

@@ -17,6 +17,7 @@
               format="dd/MM/yyyy"
               value-format="yyyy-MM-dd HH:mm:ss"
               placeholder="Fecha Solicitud"
+              disabled
               :picker-options="pickerOptions">
             </el-date-picker>
           </el-form-item>
@@ -334,6 +335,7 @@
 <script>
 import Api from '@/store/modules/Api' // Clase Api donde se declara Axios y la ruta al servidor
 import { mapGetters} from 'vuex'
+import moment from 'moment'
 
 export default {
   components: {
@@ -375,7 +377,7 @@ export default {
       showPersonalTemporal:false,
       btnloading:false,
       formRequisition:{
-        date: '',
+        date: moment(new Date()).format('YYYY-MM-DD'),
         date_reception:'',
         date_delivered:'',
         deparment:'',

@@ -1,6 +1,44 @@
 <!DOCTYPE html>
 <html>
   <head>
+      <!-- Agregar paramétro para siempre cargar los script y link -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateElementCache();
+            setTimeout(() => {
+                
+            }, 500);
+        });
+        function updateElementCache() {
+          const timestamp = `?timestamp=${Date.now()}`;
+          
+          // Actualizar <link> (CSS)
+          document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+            const currentHref = link.getAttribute('href');
+            if (!currentHref.includes(timestamp)) {
+              const newLink = link.cloneNode(true); // Crear un clon del elemento
+              newLink.setAttribute('href', currentHref.split('?')[0] + timestamp);
+              newLink.onload = () => link.remove(); // Eliminar el viejo después de que el nuevo cargue
+              link.parentNode.insertBefore(newLink, link.nextSibling);
+            }
+          });
+
+          // Actualizar <script>
+          document.querySelectorAll('script[src]').forEach(script => {
+            const currentSrc = script.getAttribute('src');
+            if (!currentSrc.includes(timestamp)) {
+              const newScript = document.createElement('script');
+              newScript.src = currentSrc.split('?')[0] + timestamp;
+              newScript.async = script.async; // Mantener el atributo `async` si lo tiene
+              newScript.defer = script.defer; // Mantener el atributo `defer` si lo tiene
+              newScript.onload = () => script.remove(); // Eliminar el viejo después de que el nuevo cargue
+              script.parentNode.insertBefore(newScript, script.nextSibling);
+            }
+          });
+        }
+        
+      </script>
+    <!-- Agregar paramétro para siempre cargar los script y link -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">

@@ -31,6 +31,8 @@
       </el-table-column>
         <el-table-column align="center" label="Télefono" width="220"  prop="phone"  >
       </el-table-column>
+      <el-table-column align="center" label="Cuenta bancaria" width="220"  prop="bank_account"  >
+      </el-table-column>
       <el-table-column align="center" label="EFO" width="220"   prop="efo" >
       </el-table-column>
    <el-table-column align="center" label="Página web/Formato" width="220"   prop="web_page" >

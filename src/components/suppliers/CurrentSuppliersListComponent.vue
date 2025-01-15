@@ -125,7 +125,7 @@
 				<el-table-column prop="is_open" width="100" label="Estatus" header-align="center" align="center">
             <template slot-scope="scope" v-if="(scope.row.update_user == null || scope.row.update_user == 0 )">
               <template v-if="scope.row.responsable.usuario_ad != user">
-                <el-button size="mini" type="success" round @click="changeStatus([scope.row.id, 1, scope.row.business_name])">Aprobar</el-button> <br>
+                <el-button size="mini" :loading="btnApprove" type="success" round @click="changeStatus([scope.row.id, 1, scope.row.business_name])">Aprobar</el-button> <br>
                 <cancel-supplier-component :supplier="scope.row"/>
               </template>
             </template>
@@ -223,6 +223,7 @@ export default {
       search:"",
       status: 0
     },
+    btnApprove:false,
     loading_get_list:false,
     now: moment().utc(),
     downloadLoading: false
@@ -319,7 +320,7 @@ export default {
     changeStatus (payload) {
       var [id, status, business_name] = payload
 
-
+      this.btnApprove=true;
       if (status === 1) {
         Api.post('/suppliers/approve', {
           id: id,
@@ -331,7 +332,7 @@ export default {
             message: response.data.message,
             type: 'success'
           })
-
+          this.btnApprove=false;
           const formAut = new FormData()
           formAut.append('name_view', this.$route.name)
           formAut.append('comentarios', 'Aprobó al proveedor ->' + business_name)
@@ -350,6 +351,7 @@ export default {
             type: 'error'
           })
           this.getList(1)
+            this.btnApprove=false;
         })
       } else {
         Api.post('/suppliers/approve', {
@@ -370,7 +372,7 @@ export default {
           formAut.append('evento', 'approve()')
 
           this.$store.dispatch('auditoria/addEventAuditoria', formAut)
-
+        this.btnApprove=false;
           this.getList(1)
           this.getTotalData()
         })
@@ -381,6 +383,7 @@ export default {
             type: 'error'
           })
           this.getList(1)
+          this.btnApprove=false;
         })
       }
     },

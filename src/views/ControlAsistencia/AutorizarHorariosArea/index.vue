@@ -16,7 +16,7 @@
         border
       >
 
-        <el-table-column fixed align="center" label="Acciones" width="115">
+        <el-table-column  align="center" label="Acciones" width="115">
           <template slot-scope="scope">
             <el-tooltip content="Autorizar" placement="top">
               <el-button type="success" icon="el-icon-check" circle :loading="btnloading" @click="autorizarHorario(scope.row.Idtime)" />
@@ -27,14 +27,25 @@
           </template>
         </el-table-column>
 
-        <el-table-column fixed align="center" label="Nombre" width="250">
+        <el-table-column  align="center" label="Nombre" width="250">
           <template slot-scope="scope">
             {{ scope.row.name +" "+scope.row.last_name }}
           </template>
         </el-table-column>
-        <el-table-column fixed align="center" label="Status" width="110">
+        <el-table-column  align="center" label="Status" width="110">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.status=='Pendiente'" type="warning" effect="dark">Pendiente</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column  align="center" label="Horas semanales" width="140">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.hours_week >= 40" type="success">{{ scope.row.hours_week }}</el-tag>
+            <el-tag v-else type="danger">{{ scope.row.hours_week }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column  align="center" label="Comentarios" width="130">
+          <template slot-scope="scope">
+            {{ scope.row.special_situation }}
           </template>
         </el-table-column>
 
@@ -312,6 +323,10 @@ export default {
     border-top: 1px solid #ccc;
     height: 5px;
   background-color:#f8f8f8;
+}
+
+.cell{
+  word-break: break-word!important;
 }
 
 </style>

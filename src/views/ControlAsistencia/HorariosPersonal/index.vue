@@ -23,18 +23,32 @@
           {{ scope.row.personal_id }}
         </template>
       </el-table-column>-->
-      <el-table-column fixed align="center" label="Nombre" width="250">
+      <el-table-column  align="center" label="Nombre" width="250">
         <template slot-scope="scope">
           {{ scope.row.name  }}
         </template>
       </el-table-column>
-      <el-table-column fixed align="center" label="Status" width="110">
+      <el-table-column  align="center" label="Status" width="160">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.status=='Aprobado'" type="success" effect="dark">Aprobado</el-tag>
-          <el-tag v-else type="danger" effect="dark">No Asignado</el-tag>
+          <el-tag v-else-if="scope.row.status == 'Rechazado'" type="danger" effect="dark">Rechazado</el-tag>
+          <el-tag v-else type="warning" effect="dark">No Asignado</el-tag>
         </template>
       </el-table-column>
-      <el-table-column fixed align="center" label="Fecha Inicio" width="130" prop="vigencia"></el-table-column>
+      
+      <el-table-column  align="center" label="Horas semanales" width="140">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.hours_week >= 40" type="success">{{ scope.row.hours_week }}</el-tag>
+          <el-tag v-else type="danger">{{ scope.row.hours_week }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column  align="center" label="Comentarios" width="150">
+        <template slot-scope="scope">
+          {{ scope.row.special_situation }}
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="Fecha Inicio" width="130" prop="vigencia"></el-table-column>
       <el-table-column align="center" label="Lunes" width="220" prop="lunes">
         <el-table-column label="Entrada">
           <template v-if="scope.row.lunes[0]" slot-scope="scope">
@@ -223,6 +237,7 @@ export default {
       console.log(this.direction)
     },
     handleAddHorario() {
+      this.$root.$refs.ModalCrearUsuario.ClearModal();
       this.$root.$refs.ModalCrearUsuario.getPersonalIntelisis()
       this.$root.$refs.ModalCrearUsuario.dialogType = 'new'
       this.$root.$refs.ModalCrearUsuario.dialogVisible = true
@@ -230,7 +245,15 @@ export default {
     handleCrearPermisos() {
       this.$refs.ModalCatStatus.getCatTimeStatus()
       this.$refs.ModalCatStatus.dialogVisible = true
-    }
+    },
+
+    assignModalNewSchedule(_Schedule){
+      this.$root.$refs.ModalCrearUsuario.ClearModal();
+      this.$root.$refs.ModalCrearUsuario.assignScheduleReject(_Schedule);
+      this.$root.$refs.ModalCrearUsuario.getPersonalIntelisis()
+      this.$root.$refs.ModalCrearUsuario.dialogType = 'new'
+      this.$root.$refs.ModalCrearUsuario.dialogVisible = true
+    },
 
   }
 }

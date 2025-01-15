@@ -113,7 +113,7 @@
               </el-button>
             </el-tooltip>
 
-            <el-tooltip v-if="scope.row.status != 'cancelado' && scope.row.status != 'rechazado'" class="item" effect="dark" content="Cancelar" placement="bottom">
+            <el-tooltip v-if="scope.row.status == 'solicitado'" class="item" effect="dark" content="Cancelar" placement="bottom">
               <el-button
                 size="mini"
                 type="danger"
@@ -199,7 +199,6 @@ export default {
 
         this.general_data = response.data
         this.loading_get_list = false
-        console.log(this.general_data);
       })
       .catch(error =>{
         console.log(error);

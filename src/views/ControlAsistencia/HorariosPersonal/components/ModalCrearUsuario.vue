@@ -14,7 +14,7 @@
       </el-form-item>
       <el-row>
         <el-col :span="9">
-          <el-form-item label="Vigencia:" prop="FechaInicio">
+          <el-form-item label="Fecha Inicio:" prop="FechaInicio">
             <el-date-picker
               v-model="ruleForm.FechaInicio"
               type="date"
@@ -26,322 +26,345 @@
         </el-col>
         <el-col :span="15">
           <el-form-item label="Comentarios:">
-            <el-input v-model="ruleForm.Comentarios" clearable />
+            <el-input
+              type="textarea"
+              :rows="3"
+              placeholder="En caso de contar con una situación especial en el horarioa soliciar"
+              v-model="ruleForm.Comentarios">
+            </el-input>
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-form-item label="Jornada:" prop="arrJornada">
-        <div style="" />
-        <el-checkbox-group v-model="ruleForm.arrJornada" @change="handleCheckedCitiesChange">
+        <!-- <div style="" /> -->
+        <!-- <el-checkbox-group v-model="ruleForm.arrJornada" @change="handleCheckedCitiesChange">
           <el-checkbox v-for="city in cities" :key="city" :label="city">{{ city }}</el-checkbox>
+        </el-checkbox-group> -->
+
+        <el-checkbox-group v-model="ruleForm.arrJornada" @change="handleCheckedCitiesChange">
+          <el-checkbox-button v-for="(city,key) in cities" :label="city" :key="city">{{city}}</el-checkbox-button>
         </el-checkbox-group>
+
         <br>
       </el-form-item>
 
-      <el-row :gutter="10" border>
-        <el-card v-if="vLunes" class="box-card d-inline-block">
-          <div slot="header" class="clearfix ">
-            <span>LUNES</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="LunesEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="LunesComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="LunesComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="LunesSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
-        <el-card v-if="vMartes" class="box-card d-inline-block">
-          <div slot="header" class="clearfix">
-            <span>MARTES</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="MartesEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="MartesComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="MartesComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="MartesSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
-        <el-card v-if="vMiercoles" class="box-card d-inline-block">
-          <div slot="header" class="clearfix">
-            <span>MIERCOLES</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="MiercolesEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="MiercolesComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="MiercolesComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="MiercolesSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
-        <el-card v-if="vJueves" class="box-card d-inline-block">
-          <div slot="header" class="clearfix">
-            <span>JUEVES</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="JuevesEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="JuevesComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="JuevesComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="JuevesSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
-        <el-card v-if="vViernes" class="box-card d-inline-block">
-          <div slot="header" class="clearfix">
-            <span>VIERNES</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="ViernesEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="ViernesComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="ViernesComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="ViernesSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
-        <el-card v-if="vSabado" class="box-card d-inline-block">
-          <div slot="header" class="clearfix">
-            <span>SABADO</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="SabadoEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="SabadoComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="SabadoComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="SabadoSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
-
-        <el-card v-if="vDomingo" class="box-card d-inline-block">
-          <div slot="header" class="clearfix">
-            <span>DOMINGO</span>
-          </div>
-          <div>
-            Hora Entrada:
-            <el-time-picker
-              v-model="DomingoEntrada"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Entrada"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 1:
-            <el-time-picker
-              v-model="DomingoComida1"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 1"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Comida 2:
-            <el-time-picker
-              v-model="DomingoComida2"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Comida 2"
-              size="small"
-              value-format="HH:mm"
-            />
-            Hora Salida:
-            <el-time-picker
-              v-model="DomingoSalida"
-              format="HH:mm"
-              style="width:100%"
-              placeholder="Hora Salida"
-              size="small"
-              value-format="HH:mm"
-            />
-          </div>
-        </el-card>
+      <el-row type="flex" border>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;">
+          <el-card v-if="vLunes">
+            <div slot="header" class="clearfix ">
+              <span>LUNES</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="LunesEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="LunesComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="LunesComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="LunesSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;">
+          <el-card v-if="vMartes" >
+            <div slot="header" class="clearfix">
+              <span>MARTES</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="MartesEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="MartesComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="MartesComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="MartesSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;">
+          <el-card v-if="vMiercoles" >
+            <div slot="header" class="clearfix">
+              <span>MIERCOLES</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="MiercolesEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="MiercolesComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="MiercolesComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="MiercolesSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;">
+          <el-card v-if="vJueves">
+            <div slot="header" class="clearfix">
+              <span>JUEVES</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="JuevesEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="JuevesComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="JuevesComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="JuevesSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;">
+          <el-card v-if="vViernes">
+            <div slot="header" class="clearfix">
+              <span>VIERNES</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="ViernesEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="ViernesComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="ViernesComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="ViernesSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;">
+          <el-card v-if="vSabado">
+            <div slot="header" class="clearfix">
+              <span>SABADO</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="SabadoEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="SabadoComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="SabadoComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="SabadoSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :sm="24" :md="3"  style="margin-right:3px;"></el-col>
+          <el-card v-if="vDomingo">
+            <div slot="header" class="clearfix">
+              <span>DOMINGO</span>
+            </div>
+            <div>
+              Hora Entrada:
+              <el-time-picker
+                v-model="DomingoEntrada"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Entrada"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 1:
+              <el-time-picker
+                v-model="DomingoComida1"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 1"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Comida 2:
+              <el-time-picker
+                v-model="DomingoComida2"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Comida 2"
+                size="small"
+                value-format="HH:mm"
+              />
+              Hora Salida:
+              <el-time-picker
+                v-model="DomingoSalida"
+                format="HH:mm"
+                style="width:100%"
+                placeholder="Hora Salida"
+                size="small"
+                value-format="HH:mm"
+              />
+            </div>
+          </el-card>
+        </el-col>
 
       </el-row>
     </el-form>
@@ -356,6 +379,7 @@
 
 <script>
 import Api from '@/store/modules/Api' // Clase Api donde se declara Axios y la ruta al servidor
+import moment from 'moment'
 
 export default {
 
@@ -428,7 +452,8 @@ export default {
         userAd: '',
         Comentarios: '',
         arrJornada: [],
-        FechaInicio: ''
+        FechaInicio: '',
+        Idtime: 0,
 
       },
       rules: {
@@ -502,6 +527,48 @@ export default {
       })
     },
     ClearModal() {
+      this.ruleForm.userAd='';
+      this.ruleForm.Comentarios='';
+      this.ruleForm.arrJornada=[];
+      this.ruleForm.FechaInicio='';
+      this.btnloading = false;
+
+      this.vLunes = false;
+      this.vMartes = false;
+      this.vMiercoles = false;
+      this.vJueves = false;
+      this.vViernes = false;
+      this.vSabado = false;
+      this.vDomingo = false;
+      this.LunesEntrada = '';
+      this.LunesComida1 = '';
+      this.LunesComida2 = '';
+      this.LunesSalida = '';
+      this.MartesEntrada = '';
+      this.MartesComida1 = '';
+      this.MartesComida2 = '';
+      this.MartesSalida = '';
+      this.MiercolesEntrada = '';
+      this.MiercolesComida1 = '';
+      this.MiercolesComida2 = '';
+      this.MiercolesSalida = '';
+      this.JuevesEntrada = '';
+      this.JuevesComida1 = '';
+      this.JuevesComida2 = '';
+      this.JuevesSalida = '';
+      this.ViernesEntrada = '';
+      this.ViernesComida1 = '';
+      this.ViernesComida2 = '';
+      this.ViernesSalida = '';
+      this.SabadoEntrada = '';
+      this.SabadoComida1 = '';
+      this.SabadoComida2 = '';
+      this.SabadoSalida = '';
+      this.DomingoEntrada = '';
+      this.DomingoComida1 = '';
+      this.DomingoComida2 = '';
+      this.DomingoSalida = '';
+
 
     },
 
@@ -549,6 +616,11 @@ export default {
       formData.append('jornada', this.ruleForm.arrJornada)
       formData.append('comentarios', this.ruleForm.Comentarios)
       formData.append('vigencia', this.ruleForm.FechaInicio)
+      if(this.ruleForm.Idtime > 0){
+        formData.append('Idtime', this.ruleForm.Idtime)
+      }else{
+        formData.append('Idtime', 0)
+      }
       formData.append('LunesEntrada', this.LunesEntrada)
       formData.append('LunesComida1', this.LunesComida1)
       formData.append('LunesComida2', this.LunesComida2)
@@ -606,6 +678,88 @@ export default {
    
     resetForm() {
       this.$refs.ruleForm.resetFields()
+    },
+
+    assignScheduleReject(_schedule_reject){
+
+      this.ruleForm.userAd = _schedule_reject.personal_intelisis_usuario_ad;
+      this.ruleForm.FechaInicio = moment().format('yyyy-MM-DD')
+      this.ruleForm.Comentarios = _schedule_reject.special_situation;  
+      this.ruleForm.Idtime = _schedule_reject.Idtime;  
+      this.ruleForm.arrJornada = [];
+
+      if(_schedule_reject.lunes && _schedule_reject.lunes.length > 0){
+        this.vLunes = true;
+        this.ruleForm.arrJornada.push("Lunes");
+        this.LunesEntrada = _schedule_reject.lunes[0].entrada;
+        this.LunesComida1 = _schedule_reject.lunes[0].comida1;
+        this.LunesComida2 = _schedule_reject.lunes[0].comida2;
+        this.LunesSalida = _schedule_reject.lunes[0].salida;
+
+      }
+
+      if(_schedule_reject.martes && _schedule_reject.martes.length > 0){
+        this.vMartes = true;
+        this.ruleForm.arrJornada.push("Martes");
+        this.MartesEntrada = _schedule_reject.martes[0].entrada;
+        this.MartesComida1 = _schedule_reject.martes[0].comida1;
+        this.MartesComida2 = _schedule_reject.martes[0].comida2;
+        this.MartesSalida = _schedule_reject.martes[0].salida;
+
+      }
+
+      if(_schedule_reject.miercoles && _schedule_reject.miercoles.length > 0){
+        this.vMiercoles = true;
+        this.ruleForm.arrJornada.push("Miercoles");
+        this.MiercolesEntrada = _schedule_reject.miercoles[0].entrada;
+        this.MiercolesComida1 = _schedule_reject.miercoles[0].comida1;
+        this.MiercolesComida2 = _schedule_reject.miercoles[0].comida2;
+        this.MiercolesSalida = _schedule_reject.miercoles[0].salida;
+        
+      }
+
+      if(_schedule_reject.jueves && _schedule_reject.jueves.length > 0){
+        this.vJueves = true;
+        this.ruleForm.arrJornada.push("Jueves");
+        this.JuevesEntrada = _schedule_reject.jueves[0].entrada;
+        this.JuevesComida1 = _schedule_reject.jueves[0].comida1;
+        this.JuevesComida2 = _schedule_reject.jueves[0].comida2;
+        this.JuevesSalida = _schedule_reject.jueves[0].salida;
+        
+      }
+
+      if(_schedule_reject.viernes && _schedule_reject.viernes.length > 0){
+        this.vViernes = true;
+        this.ruleForm.arrJornada.push("Viernes");
+        this.ViernesEntrada = _schedule_reject.viernes[0].entrada;
+        this.ViernesComida1 = _schedule_reject.viernes[0].comida1;
+        this.ViernesComida2 = _schedule_reject.viernes[0].comida2;
+        this.ViernesSalida = _schedule_reject.viernes[0].salida;
+        
+      }
+
+      if(_schedule_reject.sabado && _schedule_reject.sabado.length > 0){
+        this.vSabado = true;
+        this.ruleForm.arrJornada.push("Sabado");
+        this.SabadoEntrada = _schedule_reject.sabado[0].entrada;
+        this.SabadoComida1 = _schedule_reject.sabado[0].comida1;
+        this.SabadoComida2 = _schedule_reject.sabado[0].comida2;
+        this.SabadoSalida = _schedule_reject.sabado[0].salida;
+        
+      }
+      
+      if(_schedule_reject.domingo && _schedule_reject.domingo.length > 0){
+        this.vDomingo = true;
+        this.ruleForm.arrJornada.push("Domingo");
+        this.DomingoEntrada = _schedule_reject.domingo[0].entrada;
+        this.DomingoComida1 = _schedule_reject.domingo[0].comida1;
+        this.DomingoComida2 = _schedule_reject.domingo[0].comida2;
+        this.DomingoSalida = _schedule_reject.domingo[0].salida;
+        
+      }
+
+
+
     }
   }
 }

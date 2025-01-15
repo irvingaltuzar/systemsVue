@@ -11,21 +11,16 @@
                         <p class="title">Inicia Sesión</p>
                        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" autocomplete="on" label-position="left">
                         <el-form-item prop="usuario">
-                            <input id="usuario" type="text" 
-                            class="form-control" 
-                            name="usuario"  v-model="loginForm.usuario" 
+                            <input id="usuario" type="text" class="form-control" name="usuario"  v-model="loginForm.usuario" 
                             autocomplete="usuario" placeholder="Usuario"  tabindex="1"   autofocus />
-                         </el-form-item>
-                             <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-                <el-form-item prop="password">
- 
-                              <input class="form-control" :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="Contraseña" name="password" 
-                              tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="login"/>
-                   <!-- <span class="show-pwd" @click="showPwd">
-                        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                    </span>-->
-                           </el-form-item>
-            </el-tooltip>
+                        </el-form-item>
+                             
+                        <el-form-item prop="password">
+
+                            <input class="form-control" :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="Contraseña" name="password" 
+                            tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="login"/>
+                        </el-form-item>
+            
 
                             <input type="submit" value="Entrar" tabindex="3" @click.prevent="login">
                         </el-form>
@@ -150,9 +145,9 @@ export default {
     mounted() {
         if (this.loginForm.email === '') {
             this.$refs.username.focus()
-        } else if (this.loginForm.password === '') {
+        } /* else if (this.loginForm.password === '') {
             this.$refs.password.focus()
-        }
+        } */
     },
     destroyed() {
         // window.removeEventListener('storage', this.afterQRScan)

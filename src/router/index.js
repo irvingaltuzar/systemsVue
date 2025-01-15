@@ -9,6 +9,7 @@ import Logout from '@/views/logout/RedirectToLogout.vue'
 import Menus from './modules/menus'
 import nestedRouter from './modules/nested'
 import DiningMenu from '../views/Dining/DiningMenu.vue'
+import SingleIncidentReport from '@/views/RecursosHumanos/CAI/ProcesoDeIncidencias/single.vue'
 
 /* Router Modules */
 
@@ -103,6 +104,18 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: "/",
+    component: Layout,
+    redirect: '/Inicio',
+    hidden: false,
+    children: [{
+      path: "rh/cai/proceso-de-incidencias/single/:id",
+      name: "SingleProcesoDeIncidencias",
+      component:  SingleIncidentReport,
+      meta: { title: "Ver informe"},
+    }]
+  },
 	// {
 	// 	path: "/auth/intranet/:id",
 	// 	name: "PreLoading",
@@ -130,11 +143,21 @@ export const constantRoutes = [
     component: Layout,
     children: [
       {
-        path: 'http://192.168.3.160:8006',
+        path: 'http://intranet.dmi.local:8006',
         meta: { title: 'Intranet', icon: 'el-icon-s-home' }
       }
     ]
   },
+  {
+    path: 'Databox 2',
+    component: Layout,
+    children: [
+      {
+        path: '/Enlaces/redirectAdHoc',
+        meta: { title: 'Databox 2', icon: 'el-icon-document' }
+      }
+    ]
+  }, 
 ]
 
 // 404 page must be placed at the end !!!

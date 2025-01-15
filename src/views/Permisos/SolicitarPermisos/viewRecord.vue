@@ -374,6 +374,7 @@ export default {
 
     async signDocument(_status){
         this.fullscreenLoading = true;
+        this.btnDisabledSignFirmar= true;
 
         await Api.post("/rh/work-permits/sing-permit",{
             work_permit_id: this.work_permit.id,
@@ -393,7 +394,6 @@ export default {
 
                 this.work_permit = response.data.data;
                 this.orderSignatures();
-                this.btnDisabledSignFirmar= true;
                 this.$notify({
                     title:"Excelente",
                     message: `Se ha ${response.data.action} el permiso correctamente.`,
@@ -405,15 +405,14 @@ export default {
                 }
 
             }else{
-                this.btnDisabledSignFirmar= false;
                 this.$notify({
                     title:"Aviso",
                     message: response.data.message,
                     type:"error",
                 });
             }
-
-          this.fullscreenLoading = false;
+            this.btnDisabledSignFirmar= false;
+            this.fullscreenLoading = false;
 
         })
         .catch(error =>{
@@ -429,6 +428,7 @@ export default {
 
     async signOnBehalfDocument(_status){
         this.fullscreenLoading = true;
+        this.btnDisabledSignFirmar= true;
 
         await Api.post("/rh/work-permits/sing-permit",{
             work_permit_id: this.work_permit.id,
@@ -449,7 +449,6 @@ export default {
 
                 this.work_permit = response.data.data;
                 this.orderSignatures();
-                this.btnDisabledSignFirmar= true;
                 this.$notify({
                     title:"Excelente",
                     message: `Se ha ${response.data.action} el permiso correctamente.`,
@@ -461,7 +460,6 @@ export default {
                 }
 
             }else{
-                this.btnDisabledSignFirmar= false;
                 this.$notify({
                     title:"Aviso",
                     message: response.data.message,
@@ -469,7 +467,8 @@ export default {
                 });
             }
 
-          this.fullscreenLoading = false;
+            this.fullscreenLoading = false;
+            this.btnDisabledSignFirmar= false;
 
         })
         .catch(error =>{

@@ -43,7 +43,7 @@
             <el-option label="Octubre" value="10"></el-option>
             <el-option label="Noviembre" value="11"></el-option>
             <el-option label="Diciembre" value="12"></el-option>
-            <el-option label="Anual" value="14"></el-option>
+            <el-option label="Anual" value="00"></el-option>
           </el-select>
         </el-col>
         <el-col class="m-1 col-md-2 col-sm-12" >

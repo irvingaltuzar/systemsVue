@@ -2,7 +2,7 @@
   <div class="app-container">
     <md-content class="p-3">
       <div class="nine">
-        <h1>Consulta Horarios<span>Mi Personal</span></h1>
+        <h1>Asistencia<span>Mi Personal</span></h1>
       </div>
 
       <div class="filter-container" style="margin-left: 25%;">
@@ -30,7 +30,7 @@
       </div>
       <div class="filter-container">
         <el-input v-model="search" clearable style="width: 30%;" class="filter-item" placeholder="Buscar">  <i slot="prefix" class="el-input__icon el-icon-search" /></el-input>
-        <el-button class="filter-item" style="margin-left: 20px;" type="primary" icon="el-icon-s-claim" plain @click="handleJustification">Justificar</el-button>
+        <!-- <el-button class="filter-item" style="margin-left: 20px;" type="primary" icon="el-icon-s-claim" plain @click="handleJustification">Justificar</el-button> -->
         <el-tag type="success" effect="dark" style="margin-left: 10%">Puntualidad</el-tag>
         <el-tag type="info" effect="dark" style="margin-left: 15px">Tolerancia</el-tag>
         <el-tag type="warning" effect="dark" style="margin-left: 15px">Retardo</el-tag>
@@ -152,7 +152,6 @@ export default {
       }
     }
     var ValidateDate = (rule, value, callback) => {
-      console.log("dv")
       if (value == '' || value == null) {
         return callback(new Error('Por favor Ingresa fecha'))
       } else {
@@ -162,7 +161,7 @@ export default {
     return {
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() > Date.now()
+          return time.getTime() > moment(Date.now()).add(1,'day').format('x')
         },
         firstDayOfWeek: 1
       },
